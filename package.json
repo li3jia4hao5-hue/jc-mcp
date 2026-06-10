@@ -1,7 +1,7 @@
 {
   "name": "jc-mcp",
   "version": "1.0.0",
-  "description": "MCP server for 中国体育彩票竞彩足球 real-time odds",
+  "description": "⚽ World Cup 2026 Prediction Suite — 6-layer AI prediction + real-time odds + betting analytics",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {

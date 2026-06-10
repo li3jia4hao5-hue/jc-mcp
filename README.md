@@ -1,186 +1,186 @@
-# 🎰 jc-mcp — 中国竞彩足球 MCP 服务器
+# ⚽ World Cup 2026 Prediction Suite
 
-实时获取[中国体育彩票竞彩足球](https://www.sporttery.cn)官方赔率的 MCP 服务器。
+> 6层数据交叉验证 · AI预测 + 竞彩赔率 + 预测市场 + 博彩数学 · 一键部署
 
-支持**全部5种玩法**，专为 **Claude Code / Cursor / Windsurf** 等 AI 编程助手打造。
-
----
-
-## 📊 数据来源
-
-**中国竞彩网官方 API** (`webapi.sporttery.cn`) — 实时、权威、零延迟、固定奖金制。
+世界杯2026 AI预测完整工具链 — 六层数据源同时调用，交叉验证，消除单一来源偏差。
 
 ---
 
-## 🎮 五种玩法
+## 🎯 核心能力
 
-| 玩法 | 代码 | 选项数 | 说明 |
-|------|:---:|:---:|------|
-| 胜平负 | HAD | 3 | 猜90分钟主队胜/平/负，入门首选 |
-| 让球胜平负 | HHAD | 3 | 官方设让球数（如-1、+2）后再猜 |
-| 比分 | CRS | 31 | 精确猜中90分钟最终比分 |
-| 总进球数 | TTG | 8 | 猜总进球区间 0/1/2/3/4/5/6/7+ |
-| 半全场 | HAFU | 9 | 同时猜上半场+全场结果 |
+| 能力 | 工具 | 说明 |
+|------|------|------|
+| 🏆 **冠军预测** | 蒙特卡洛5000次模拟 | 逐队夺冠概率，逐轮晋级概率 |
+| 📊 **单场预测** | AI模型 + 竞彩赔率交叉 | 胜平负概率 + 比分预测 + 冷门预警 |
+| 🎰 **实时赔率** | 竞彩官方API | 5种玩法(胜平负/让球/比分/总进球/半全场) |
+| 💰 **投注策略** | 凯利公式 + 串关分析 | 自动生成保本+博大奖分区方案 |
+| 🏟 **赛程数据** | 48队/16场馆/104场 | 球队档案、历史交锋、伤病追踪 |
+| 📈 **预测市场** | Polymarket真金白银 | 与竞彩赔率对比找偏差 |
 
 ---
 
-## 🚀 安装
+## 🔬 6层数据交叉验证
+
+```
+用户提问
+  │
+  ├─ 🔴 竞彩赔率 (jc-mcp) ──────── 官方法定赔率，投注基准
+  ├─ 🟠 AI模型 (onside-football) ──── 蒙特卡洛模拟，胜率拆解
+  ├─ 🟡 预测市场 (polymarket) ───── 真金白银，真实概率信号
+  ├─ 🟢 基本信息 (wc26) ───────── 球队/赛程/伤病/历史
+  ├─ 🔵 博彩数学 (betting) ─────── 凯利公式/串关/找优势
+  └─ ⚫ 赛前情报 (WebSearch) ───── 首发/突发伤病/天气
+       │
+       ▼
+  交叉验证结论 + 投注建议
+```
+
+---
+
+## 🚀 一键部署
 
 ### 前置要求
-- Node.js >= 18
-- MCP 客户端（Claude Code / Claude Desktop / Cursor 等）
+- Node.js ≥ 18
+- Python ≥ 3.10
+- Claude Code / Claude Desktop / Cursor
 
-### 步骤 1: 克隆并编译
+### 安装全部组件
 
 ```bash
-git clone https://github.com/li3jia4hao5-hue/jc-mcp.git
+# 1. 克隆本仓库（竞彩赔率核心）
+git clone git@github.com:li3jia4hao5-hue/jc-mcp.git
 cd jc-mcp
-npm install
-npm run build
-```
+npm install && npm run build
 
-> 💡 **国内加速**: 如果 GitHub 克隆慢，可用 `git clone git@github.com:li3jia4hao5-hue/jc-mcp.git`（SSH）
+# 2. 安装AI预测 & 基本信息 MCP
+# （npx自动拉取，不需要clone）
 
-### 步骤 2: 注册到 MCP 客户端
+# 3. 安装预测市场 & 博彩分析 CLI
+pip install git+https://github.com/machina-sports/sports-skills.git
 
-**Claude Code:**
-```bash
-claude mcp add jc-mcp -- node /path/to/jc-mcp/dist/index.js
-```
-
-**Claude Desktop** (`claude_desktop_config.json`):
-```json
-{
-  "mcpServers": {
-    "jc-mcp": {
-      "command": "node",
-      "args": ["/path/to/jc-mcp/dist/index.js"]
-    }
-  }
-}
-```
-
-**Cursor** (`.cursor/mcp.json`):
-```json
-{
-  "mcpServers": {
-    "jc-mcp": {
-      "command": "node",
-      "args": ["/path/to/jc-mcp/dist/index.js"]
-    }
-  }
-}
+# 4. 注册到 Claude Code（一键）
+claude mcp add jc-mcp -- node "$(pwd)/dist/index.js"
+claude mcp add wc26 -- npx -y wc26-mcp
+claude mcp add onside-football -- npx -y onside-football-mcp
 ```
 
 ---
 
-## 🛠 三个工具
+## 🛠 工具清单
 
-### `get_jc_odds` — 完整赔率
-拉取当天全部比赛的全部5种玩法赔率。
+### 🔴 jc-mcp — 竞彩实时赔率（本仓库核心）
 
-| 参数 | 类型 | 说明 |
-|------|------|------|
-| `date` | 可选 | 日期 YYYY-MM-DD，默认当天 |
-| `team` | 可选 | 按队名模糊筛选，如 `"阿根廷"`、`"葡萄牙"` |
-| `league` | 可选 | 按联赛筛选，如 `"世界杯"`、`"英超"` |
-| `play_type` | 可选 | `HAD`/`HHAD`/`CRS`/`TTG`/`HAFU`/`all`，默认all |
+| 工具 | 用途 |
+|------|------|
+| `get_jc_odds` | 当天全部比赛5种玩法赔率 |
+| `get_jc_odds_simple` | 胜平负+让球速览 |
+| `get_jc_match_odds` | 指定两队深度分析（隐含概率+最佳选项） |
 
-### `get_jc_odds_simple` — 快速扫描
-只返回胜平负 + 让球胜平负，适合快速扫盘。
+数据来源：中国竞彩网 webapi.sporttery.cn 官方API，实时更新。
 
-### `get_jc_match_odds` — 深度分析
-指定两队，返回隐含概率 + 返奖率 + 最佳赔率选项。
+### 🟠 onside-football-mcp — AI蒙特卡洛预测
 
-| 参数 | 类型 | 说明 |
-|------|------|------|
-| `home_team` | **必填** | 主队中文简写，如 `"墨西哥"` |
-| `away_team` | **必填** | 客队中文简写，如 `"南非"` |
+| 工具 | 用途 |
+|------|------|
+| `get_wc_champion_odds` | 5000次蒙特卡洛夺冠概率 |
+| `get_wc_match_prediction` | 任意对阵胜率拆解 |
+| `get_wc_upset_watch` | 冷门预警 |
+| `get_wc_live_scores` | 实时比分 |
+
+### 🟡 sports-skills — 预测市场 & 博彩分析
+
+| 模块 | 用途 |
+|------|------|
+| `polymarket` | 真金白银预测市场赔率 |
+| `kalshi` | 另一预测市场数据源 |
+| `betting` | 凯利公式/找优势/串关分析 |
+| `football` | 比赛详情/球队数据/历史战绩 |
+
+### 🟢 wc26-mcp — 赛事基础数据
+
+| 工具 | 用途 |
+|------|------|
+| `what_to_know_now` | 今日智能简报 |
+| `compare_teams` | 两队全方位对比 |
+| `get_team_profile` | 球队深度档案 |
+| `get_injuries` | 伤病追踪 |
+| `get_bracket` | 淘汰赛对阵图 |
 
 ---
 
 ## 💬 使用示例
 
-在 Claude Code 中直接用自然语言：
+在 Claude Code 中直接用自然语言提问：
 
 ```
-"查一下今天世界杯的竞彩赔率"
-"快速扫一眼明天有哪些比赛"
-"深度分析一下英格兰vs克罗地亚，给出投注建议"
-"对比竞彩赔率和AI预测，看有没有偏差"
+"明天揭幕战墨西哥vs南非，帮我预测一下"
+"法国和西班牙谁更可能夺冠？"
+"我有100元想投比分，帮我设计一个保本+博大奖的方案"
+"分析今天全部世界杯比赛，找出赔率最有价值的"
+"英格兰vs克罗地亚，竞彩赔率和AI预测有没有偏差？"
 ```
+
+AI 会自动调用6层数据交叉验证，给出：
+- 📊 三方预测对比表（竞彩/AI/预测市场）
+- 💰 投注策略建议（凯利公式计算最优下注比例）
+- 🚑 伤病/首发情报
+- ⚠️ 冷门风险预警
 
 ---
 
-## 🧠 推荐搭配 — 6层预测体系
+## 📐 竞彩基础知识
 
-单用 jc-mcp 只能看赔率，搭配以下工具形成完整预测链：
+### 五种玩法
 
-| 层 | 工具 | 能力 |
-|:---:|------|------|
-| 🔴 | **jc-mcp** (本工具) | 竞彩官方赔率 — 投注决策基准 |
-| 🟠 | [onside-football-mcp](https://www.npmjs.com/package/onside-football-mcp) | AI蒙特卡洛模型 — 胜率拆解 |
-| 🟡 | [sports-skills](https://github.com/machina-sports/sports-skills) | Polymarket预测市场 + 凯利公式 |
-| 🟢 | [wc26-mcp](https://github.com/jordanlyall/wc26-mcp) | 赛程/伤病/历史交锋/球队档案 |
-| 🔵 | WebSearch | 赛前1小时首发/突发伤病 |
-| ⚫ | sports-skills betting | 串关数学分析/凯利准则 |
+| 玩法 | 选项数 | 说明 |
+|------|:---:|------|
+| 胜平负 | 3 | 猜主队胜/平/负，入门首选 |
+| 让球胜平负 | 3 | 官方设让球后再猜 |
+| 比分 | 31 | 精确猜最终比分 |
+| 总进球数 | 8 | 猜总进球 0/1/2/3/4/5/6/7+ |
+| 半全场 | 9 | 同时猜上半场+全场 |
 
-```bash
-# 一键安装全套
-claude mcp add jc-mcp -- node /path/to/jc-mcp/dist/index.js
-claude mcp add wc26 -- npx -y wc26-mcp
-claude mcp add onside-football -- npx -y onside-football-mcp
-pip install git+https://github.com/machina-sports/sports-skills.git
-```
+### 隐含概率
 
----
+竞彩返奖率约71%：`P = 0.71 ÷ 赔率`
 
-## 📐 隐含概率公式
+### 串关返奖率
 
-竞彩返奖率约 **71%**（国内彩票最高）：
-
-```
-隐含概率 P = 0.71 ÷ 赔率
-
-例如: 赔率 2.00 → P = 0.71/2.00 = 35.5%
-```
+| 串关 | 返奖率 |
+|:---:|:---:|
+| 2串1 | ~79% |
+| 3串1 | ~71% |
+| 4串1 | ~63% |
+| 6串1 | ~50% |
 
 ---
 
-## 🏗 技术架构
+## 🏗 架构
 
 ```
 Claude Code / Cursor
-       │  MCP JSON-RPC (stdio)
-       ▼
-  ┌─────────────┐
-  │  jc-mcp     │  ← TypeScript + @modelcontextprotocol/sdk
-  │  index.ts   │
-  └──────┬──────┘
-         │  HTTPS GET
-         ▼
-  ┌─────────────────────────┐
-  │  webapi.sporttery.cn    │  ← 中国竞彩网官方API
-  │  getMatchCalculatorV1   │
-  └─────────────────────────┘
+  │
+  ├─ MCP (stdio JSON-RPC)
+  │   ├── jc-mcp ──────► webapi.sporttery.cn      (竞彩赔率)
+  │   ├── wc26-mcp ─────► 内置数据                 (赛事信息)
+  │   └── onside-football ► onsidearena.com/api/v1 (AI预测)
+  │
+  ├─ Bash CLI
+  │   └── sports-skills ► ESPN/Polymarket/Kalshi  (预测市场)
+  │
+  └─ WebSearch ────────► 实时新闻/首发/伤病
 ```
-
-- **运行时**: Node.js ≥ 18
-- **传输**: MCP stdio (JSON-RPC)
-- **参数校验**: Zod
-- **零外部依赖**（除MCP SDK外）
 
 ---
 
-## ⚠️ 重要提醒
+## ⚠️ 理性购彩
 
-- 🏪 竞彩**唯一合法渠道**：线下中国体育彩票实体店
+- 🏪 竞彩唯一合法渠道：**线下中国体育彩票实体店**
 - 🔞 未满18周岁不得购买
-- 🧠 理性购彩，量力而行
-- 📌 固定奖金制：出票即锁定，不受后续调整影响
-- ⏱️ 淘汰赛只计90分钟常规时间+伤停补时（冠军/冠亚军竞猜除外）
-- 💰 中奖超1万元需缴20%个人所得税
-- 📅 兑奖期限：60个自然日，逾期作废
+- 📌 固定奖金制：出票即锁定
+- ⏱️ 淘汰赛只计90分钟+伤停补时
+- 💰 中奖超1万元：20%个税
+- 🧠 **本工具提供数据和分析，不构成投注建议。请理性购彩，量力而行。**
 
 ---
 

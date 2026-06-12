@@ -1,8 +1,13 @@
-# ⚽ World Cup 2026 Prediction Suite
+# ⚽ World Cup 2026 Prediction Suite | 2026世界杯AI预测工具链
 
-> 6层数据交叉验证 · AI预测 + 竞彩赔率 + 预测市场 + 博彩数学 · 一键部署
+> 🎰 Claude Code MCP插件 | 竞彩实时赔率 + 蒙特卡洛AI预测 + Polymarket市场 | 6层交叉验证 | 一键部署
 
-世界杯2026 AI预测完整工具链 — 六层数据源同时调用，交叉验证，消除单一来源偏差。
+**世界杯2026 AI预测完整工具链** — 六层数据源同时调用，交叉验证，消除单一来源偏差。
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Node.js](https://img.shields.io/badge/Node.js-%3E%3D18-green)](https://nodejs.org)
+![MCP Server](https://img.shields.io/badge/MCP-Server-blue)
+![World Cup 2026](https://img.shields.io/badge/World_Cup-2026-gold)
 
 ---
 

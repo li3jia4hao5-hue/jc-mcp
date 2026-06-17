@@ -1,35 +1,6 @@
-# 点金AI (jiahaoai.top) 项目
+# ⚽ World Cup 2026 Prediction System
 
-## 项目定位
-AI视频生成平台 + API中转站。底层接移动云Seedance2.0，前端React画布，后端Flask+New API分发。
-
-## 服务器
-- 阿里云香港 47.76.198.144 | Ubuntu 22.04 2核4G | SSH: root/lijiahao521@:22
-- 所有服务systemd管理。New API在Docker。nginx反代，SSL自动续期。
-- 数据库: Flask=/opt/jiahaoai/data/tokens.db, NewAPI=/opt/jiahaoai/data/newapi-data/one-api.db
-
-## 核心服务 (都是systemd)
-- jiahaoai-flask (19081): maas-proxy.py — Seedance代理，格式转换+EOS+计费
-- new-api Docker (3000): 鉴权/分发Key/订阅 — ad.jiahaoai.top
-- jiahaoai-serve (8080): 前端静态文件
-- jiahaoai-express (3001): 网站登录JWT
-
-## 关键文件
-- /opt/jiahaoai/server/maas-proxy.py — Flask核心(改前先备份！容易因缩进/编码搞坏)
-- /c/Users/Administrator/image-tool/ — 前端源码
-- /c/Users/Administrator/Desktop/项目完整资料.txt — 所有细节
-
-## 改Flask代码的强制规则
-- 永远不要用sed改maas-proxy.py，中文注释+缩进会被搞坏
-- 用Python脚本：读lines -> 改指定行 -> writelines
-- 改完先跑 compile() 检查语法再restart
-
-## 常用操作
-- 查用户积分: sqlite3 /opt/jiahaoai/data/tokens.db "SELECT * FROM tokens"
-- 重启Flask: systemctl restart jiahaoai-flask (等20秒Jeddak鉴权)
-- 改NewAPI配置: 直接写 /opt/jiahaoai/data/newapi-data/one-api.db
-- 看日志: tail -50 /opt/jiahaoai/data/proxy-debug.log
-- 计费: Flask直连用calculate_cost(720p=100/s,480p=47/s), NewAPI回调按216token=1积分
+> 12步预测 + 20层技能 | 18层科学 + 1层玄学 + 1层赔率认知
 
 ## 世界杯预测体系 (自动调用 — 18层数据交叉验证)
 
